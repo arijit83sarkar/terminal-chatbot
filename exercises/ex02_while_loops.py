@@ -31,7 +31,26 @@ Out of turns.
 scripted = ["hi", "", "what's up", "quit", "never reached"]
 
 # TODO Part A
+count = 0
+# print(f"Turn {count+1}: {scripted[count]}")
+while count < 3:
+    value = scripted[count]
+    if value == "":
+        continue
+    elif value == "quit":
+        print(f"Stopped at {value} after {count} messages.")
+        break
+    else:
+        print(f"Turn {count+1}: {value}")
+    print(f"Turn {count+1}: {value}")
+    count = count + 1
+
 ...
 
 # TODO Part B
+turn_left = 3
+while turn_left > 0:
+    print(f"Turns left: {turn_left}")
+    turn_left = turn_left - 1
+print("Out of turns.")
 ...

@@ -30,10 +30,25 @@ Types: str, int, float, bool
 """
 
 # TODO 1: create the variables
+bot_name = "Sage"
+user_name = "Arijit"
+turns = 3
+tokens_used = 2400
+usd_per_1k = 0.003
+is_streaming = False
 ...
 
 # TODO 2: compute the cost
+computed_cost = tokens_used / 1000 * usd_per_1k
 ...
 
 # TODO 3: print the six lines
+print(f"{bot_name}: Hello, {user_name}!")
+print(f"Turns: {turns} | Tokens: {tokens_used:,}")
+print(f"Cost: ${computed_cost:.4f}")
+print(f"Streaming: {is_streaming}")
+print(f"Repr: {bot_name!r}")
+print(
+    f"Types: {type(bot_name).__name__}, {type(turns).__name__}, {type(computed_cost).__name__}, {type(is_streaming).__name__}"
+)
 ...
