@@ -39,11 +39,16 @@ Bye Arijit! (2 messages)
 # TODO: write the whole program
 name = input("Your name: ")
 print(f"Nice to meet you, {name.strip()}!")
+
+count = 0
 while True:
-    text = input("You: ")
-    if text == "": 
+    text = input("You: ").strip()
+    if not text:
         continue
     if text.lower() == "quit":
         break
-    print(f"Bot: {text.strip()}")
+    count += 1
+    print(f"Bot: you said {text!r}")
+
+print(f"Bye {name}! ({count} messages)")
 ...
