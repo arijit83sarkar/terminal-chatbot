@@ -37,17 +37,24 @@ import os
 
 def get_setting(name: str, default: str) -> str:
     # TODO: return os.environ's value for `name`, or `default`
-    raise NotImplementedError("TODO: return os.environ's value for `name`, or `default`")
+    if not os.environ.get(name):
+        return default
+    return os.environ.get(name)
 
 
 def require_env(name: str) -> str:
     # TODO: raise RuntimeError(f"Missing environment variable: {name}") when unset/empty
-    raise NotImplementedError('TODO: raise RuntimeError(f"Missing environment variable: {name}") when unset/empty')
+    value = os.environ.get(name)
+    if not value:
+        raise RuntimeError(f"Missing environment variable: {name}")
+    return value
 
 
 def mask(secret: str) -> str:
     # TODO: mask the secret (rules in the docstring)
-    raise NotImplementedError('TODO: mask the secret (rules in the docstring)')
+    if len(secret) < 12:
+        return "***"
+    return f"{secret[:7]}...{secret[-2:]}"
 
 
 if __name__ == "__main__":
