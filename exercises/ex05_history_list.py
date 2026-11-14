@@ -27,23 +27,24 @@ Counts: {'assistant': 2, 'system': 1, 'user': 2}
 
 
 def add_message(history: list[dict], role: str, content: str) -> None:
-    # TODO: append {"role": role, "content": content}
-    raise NotImplementedError('TODO: append {"role": role, "content": content}')
+    history.append({"role": role, "content": content})
 
 
 def last_n(history: list[dict], n: int) -> list[dict]:
-    # TODO: return the last n messages (n == 0 -> empty list)
-    raise NotImplementedError('TODO: return the last n messages (n == 0 -> empty list)')
+    if n == 0:
+        return []
+    return history[-n:]
 
 
 def render(history: list[dict]) -> list[str]:
-    # TODO: return ["role: content", ...]
-    raise NotImplementedError('TODO: return ["role: content", ...]')
+    return [f"{message['role']}: {message['content']}" for message in history]
 
 
 def count_by_role(history: list[dict]) -> dict[str, int]:
-    # TODO: count messages per role
-    raise NotImplementedError('TODO: count messages per role')
+    counts: dict[str, int] = {}
+    for message in history:
+        counts[message["role"]] = counts.get(message["role"], 0) + 1
+    return counts
 
 
 if __name__ == "__main__":
