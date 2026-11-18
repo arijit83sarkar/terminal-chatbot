@@ -58,8 +58,8 @@ def regenerate(history: list[dict], answer: str) -> list[dict]:
 
 def common_prefix_len(a: list[dict], b: list[dict]) -> int:
     count = 0
-    while a and b:
-        if a[count]["content"] != b[count]["content"]:
+    for x, y in zip(a, b):
+        if x["role"] != y["role"] or x["content"] != y["content"]:
             break
         count += 1
     return count
