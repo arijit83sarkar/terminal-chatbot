@@ -35,20 +35,44 @@ No chunks: '' {}
 """
 
 
+# fake the stream
 def chunk_text(text: str, size: int) -> list[dict]:
-    raise NotImplementedError
+    count = 0
+    chunks: list[dict] = []
+    while count < len(text):
+        txt = text[count : count + size]
+        chunks.append({"type": "delta", "text": txt})
+        count += size
+    return chunks
+    # return [
+    #     {"type": "delta", "text": text[i : i + size]} for i in range(0, len(text), size)
+    # ]
 
 
+# glue the pieces back
 def collect_text(chunks: list[dict]) -> str:
-    raise NotImplementedError
+    result: list[str] = []
+    for chunk in chunks:
+        if chunk["type"] == "delta":
+            # print(f"{chunk}")
+            result.append(chunk["text"])
+    return "".join(result)
+    # return "".join(c["text"] for c in chunks if c["type"] == "delta")
 
 
+# find the token counts
 def final_usage(chunks: list[dict]) -> dict[str, int]:
-    raise NotImplementedError
+    usage: dict[str, int] = {}
+    for c in chunks:
+        if c["type"] == "stop":
+            usage = c["usage"]
+    return usage
 
 
+# the one that matters
 def finish(history: list[dict], chunks: list[dict]) -> dict[str, int]:
-    raise NotImplementedError
+    history.append({"role": "assistannt", "content": collect_text(chunks)})
+    return final_usage(chunks)
 
 
 if __name__ == "__main__":
