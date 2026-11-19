@@ -31,12 +31,30 @@ from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, System
 
 def to_messages(history: list[dict]) -> list[BaseMessage]:
     # TODO: map "system"/"user"/"assistant" to the three message classes
-    raise NotImplementedError('TODO: map "system"/"user"/"assistant" to the three message classes')
+    result: list[BaseMessage] = []
+    for h in history:
+        if h["role"] == "system":
+            result.append(SystemMessage(content=h["content"]))
+        elif h["role"] == "user":
+            result.append(HumanMessage(content=h["content"]))
+        elif h["role"] == "assistant":
+            result.append(AIMessage(content=h["content"]))
+        else:
+            raise ValueError("Unknown role: robot")
+    return result
 
 
 if __name__ == "__main__":
     # TODO: create one of each type and print "<type>: <content>"
     ...
+    system = SystemMessage(content="You are terse.")
+    print(f"{system.type}: {system.content}")
+
+    human = HumanMessage(content="Hi")
+    print(f"{human.type}: {human.content}")
+
+    ai = AIMessage(content="Hello.")
+    print(f"{ai.type}: {ai.content}")
 
     history = [
         {"role": "system", "content": "You are terse."},
@@ -45,7 +63,10 @@ if __name__ == "__main__":
         {"role": "user", "content": "What is 2+2?"},
     ]
     messages = to_messages(history)
-    print(f"Converted {len(messages)} messages: " + ", ".join(type(m).__name__ for m in messages))
+    print(
+        f"Converted {len(messages)} messages: "
+        + ", ".join(type(m).__name__ for m in messages)
+    )
     print(f"Last: {messages[-1].content}")
     print(f"Is human? {isinstance(messages[-1], HumanMessage)}")
     try:
